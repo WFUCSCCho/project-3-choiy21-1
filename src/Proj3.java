@@ -4,6 +4,16 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Proj3 {
+    // private inner class to store sorting results
+    private static class SortResult {
+        long time;
+        String comparisons;
+
+        SortResult(long time, String comparisons) {
+            this.time = time;
+            this.comparisons = comparisons;
+        }
+    }
     // Sorting Method declarations
     // Merge Sort
     public static <T extends Comparable<T>> void mergeSort(ArrayList<T> a, int left, int right) {
@@ -222,23 +232,34 @@ public class Proj3 {
         Collections.sort(reversed, Collections.reverseOrder());
 
         // run sorting and timing for each
-        long sortedTime = sortAndTime(sorted, "sorted", sort, lines);
-        long shuffledTime = sortAndTime(shuffled, "shuffled", sort, lines);
-        long reversedTime = sortAndTime(reversed, "reversed", sort, lines);
+        SortResult sortedResult = sortAndTime(sorted, "sorted", sort, lines);
+        SortResult shuffledResult = sortAndTime(shuffled, "shuffled", sort, lines);
+        SortResult reversedResult = sortAndTime(reversed, "reversed", sort, lines);
 
         // save results to files
-        saveAnalysis(sort, lines, sortedTime, shuffledTime, reversedTime);
+        saveAnalysis(sort, lines, sortedResult, shuffledResult, reversedResult);
         saveSortedData(sorted);
 
         // print results to console
         System.out.printf("number of lines: %d%n", lines);
         System.out.printf("sorting algorithm: %s%n", sort);
-        System.out.printf("time (sorted): %d ns%n", sortedTime);
-        System.out.printf("time (shuffled): %d ns%n", shuffledTime);
-        System.out.printf("time (reversed): %d ns%n", reversedTime);
+
+        printResults("sorted list", sortedResult, sort);
+        printResults("shuffled list", shuffledResult, sort);
+        printResults("reversed list", reversedResult, sort);
     }
 
-    private static long sortAndTime(ArrayList<Chocolate> data, String type, String sort, int lines) {
+    // helper method to print results with conditional comparisons
+    private static void printResults(String type, SortResult result, String sort) {
+        System.out.printf("%s – time: %d ns", type, result.time);
+        if (sort.equals("bubble") || sort.equals("transposition")) {
+            System.out.printf(", comparisons: %s%n", result.comparisons);
+        } else {
+            System.out.println();
+        }
+    }
+
+    private static SortResult sortAndTime(ArrayList<Chocolate> data, String type, String sort, int lines) {
         long start = System.nanoTime();
         int comparisons = 0;
 
@@ -260,30 +281,36 @@ public class Proj3 {
                 break;
             default:
                 System.out.println("Invalid sorting algorithm type.");
-                return -1;
+                return new SortResult(-1, "N/A");
         }
 
         long end = System.nanoTime();
         long time = end - start;
 
-        if (sort.equals("bubble") || sort.equals("transposition")) {
-            System.out.println("comparisons: " + comparisons + " (" + type + ")");
-        }
-
-        return time;
+        String comparisonsResult = (sort.equals("bubble") || sort.equals("transposition")) ? Integer.toString(comparisons) : "N/A";
+        return new SortResult(time, comparisonsResult);
     }
 
-    private static void saveAnalysis(String sort, int lines, long sortedTime, long shuffledTime, long reversedTime) throws IOException {
+    private static void saveAnalysis(String sort, int lines, SortResult sortedResult, SortResult shuffledResult, SortResult reversedResult) throws IOException {
         File file = new File("analysis.txt");
         boolean isNewFile = file.createNewFile(); // Check if the file is newly created
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
             if (isNewFile) {
                 // Write header only if the file is new
-                writer.println("Algorithm,Lines,SortedTime(ns),ShuffledTime(ns),ReversedTime(ns)");
+                writer.println("Algorithm,Lines,SortedTime(ns),ShuffledTime(ns),ReversedTime(ns),SortedComparisons,ShuffledComparisons,ReversedComparisons");
             }
-            // Append the data
-            writer.printf("%s,%d,%d,%d,%d%n", sort, lines, sortedTime, shuffledTime, reversedTime);
+            // Append the data, including comparisons columns
+            writer.printf("%s,%d,%d,%d,%d,%s,%s,%s%n",
+                    sort,
+                    lines,
+                    sortedResult.time,
+                    shuffledResult.time,
+                    reversedResult.time,
+                    sortedResult.comparisons,
+                    shuffledResult.comparisons,
+                    reversedResult.comparisons
+            );
         }
     }
 
