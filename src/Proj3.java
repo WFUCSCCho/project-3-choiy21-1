@@ -241,8 +241,8 @@ public class Proj3 {
         saveSortedData(sorted);
 
         // print results to console
-        System.out.printf("number of lines: %d%n", lines);
         System.out.printf("sorting algorithm: %s%n", sort);
+        System.out.printf("number of lines: %d%n", lines);
 
         printResults("sorted list", sortedResult, sort);
         printResults("shuffled list", shuffledResult, sort);
