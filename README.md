@@ -100,14 +100,24 @@ Bubble Sort, Merge Sort, Quick Sort, and Heap Sort running time (already sorted)
 
 
 Bubble Sort, Merge Sort, Quick Sort, and Heap Sort running time (shuffled):
+![plot2](https://github.com/user-attachments/assets/08edfbb3-1eb4-4299-adb5-f705c6e157af)
+
 
 Bubble Sort, Merge Sort, Quick Sort, and Heap Sort running time (reversed):
+![plot3](https://github.com/user-attachments/assets/5021f6a5-e679-4609-84b2-8111683562a8)
+
 
 Bubble Sort and Odd-Even Transposition Sort comparison (already sorted):
+![plot4](https://github.com/user-attachments/assets/43e71200-2a36-4c90-aee3-1506f328d909)
 
-Bubble Sort and Odd-Even Transposition Sort comparison (shuffled):
+
+Bubble Sort and Odd-Even Transposition Sort comparison (shuffled
+![plot5](https://github.com/user-attachments/assets/0e249140-cfc2-4133-8423-70d7f60eae12)
+
 
 Bubble Sort and Odd-Even Transposition Sort comparison (reversed):
+![plot6](https://github.com/user-attachments/assets/15258f68-2681-4a44-b26c-ebaac81cabcd)
+
 
 ## Submission:
 
