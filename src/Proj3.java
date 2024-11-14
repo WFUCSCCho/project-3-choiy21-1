@@ -222,9 +222,9 @@ public class Proj3 {
         Collections.sort(reversed, Collections.reverseOrder());
 
         // run sorting and timing for each
-        long sortedTime = sortAndTime(sorted, sort, lines);
-        long shuffledTime = sortAndTime(shuffled, sort, lines);
-        long reversedTime = sortAndTime(reversed, sort, lines);
+        long sortedTime = sortAndTime(sorted, "sorted", sort, lines);
+        long shuffledTime = sortAndTime(shuffled, "shuffled", sort, lines);
+        long reversedTime = sortAndTime(reversed, "reversed", sort, lines);
 
         // save results to files
         saveAnalysis(sort, lines, sortedTime, shuffledTime, reversedTime);
@@ -235,10 +235,10 @@ public class Proj3 {
         System.out.printf("sorting algorithm: %s%n", sort);
         System.out.printf("time (sorted): %d ns%n", sortedTime);
         System.out.printf("time (shuffled): %d ns%n", shuffledTime);
-        System.out.printf("time  (reversed): %d ns%n", reversedTime);
+        System.out.printf("time (reversed): %d ns%n", reversedTime);
     }
 
-    private static long sortAndTime(ArrayList<Chocolate> data, String sort, int lines) {
+    private static long sortAndTime(ArrayList<Chocolate> data, String type, String sort, int lines) {
         long start = System.nanoTime();
         int comparisons = 0;
 
@@ -267,7 +267,7 @@ public class Proj3 {
         long time = end - start;
 
         if (sort.equals("bubble") || sort.equals("transposition")) {
-            System.out.println("comparisons: " + comparisons);
+            System.out.println("comparisons: " + comparisons + " (" + type + ")");
         }
 
         return time;
@@ -292,10 +292,8 @@ public class Proj3 {
         boolean isNewFile = file.createNewFile(); // Check if the file is newly created
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
-            if (isNewFile) {
-                // Write header for the `Chocolate` fields
-                writer.println("Company,Origin,Ref,ReviewDate,CocoaPercent,Location,Rating");
-            }
+            // write header for the `Chocolate` fields
+            writer.println("Company,Origin,Ref,ReviewDate,CocoaPercent,Location,Rating");
             for (Chocolate chocolate : sorted) {
                 writer.println(chocolate);
             }
