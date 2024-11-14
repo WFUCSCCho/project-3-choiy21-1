@@ -96,7 +96,8 @@ vs. N for each case. Take a screenshot of your graph and put them here by modify
 it to this repository.
 
 Bubble Sort, Merge Sort, Quick Sort, and Heap Sort running time (already sorted):
-![image](https://github.com/user-attachments/assets/76f103c8-8c02-4bec-9966-99568f2effb6)
+![plot1](https://github.com/user-attachments/assets/0f75ba15-e20f-4677-b6dc-4266f121ae08)
+
 
 Bubble Sort, Merge Sort, Quick Sort, and Heap Sort running time (shuffled):
 
