@@ -1,3 +1,10 @@
+/**********************************************************************
+ * @file: Chocolate.java
+ * @description: Class for custom object to be used for my dataset.
+ * @author: Kate Choi
+ * @date: 14 November 2024
+ **********************************************************************/
+
 public class Chocolate implements Comparable<Chocolate> {
     private String company;
     private String origin;
@@ -30,11 +37,13 @@ public class Chocolate implements Comparable<Chocolate> {
         this.rating = rating;
     }
 
+    // comparison method
     @Override
     public int compareTo(Chocolate other) {
         return Double.compare(this.rating, other.rating); // sort by rating
     }
 
+    // toString method
     @Override
     public String toString() {
         return String.format("%s,%s,%d,%d,%.2f,%s,%.2f",

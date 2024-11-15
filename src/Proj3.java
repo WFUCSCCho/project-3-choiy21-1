@@ -1,3 +1,14 @@
+/**********************************************************************
+ * @file: Proj3.java
+ * @description:
+    * Implement the Bubble Sort, Merge Sort, Quick Sort, Heap Sort, and Odd-Even Transposition Sort algorithms.
+    * Perform the sorting algorithms using already-sorted, shuffled, and reversed datasets lists as input.
+    * Time the sorting algorithm performance for the different set of inputs.
+    * Graph and analyze the performance of the sorting algorithms.
+ * @author: Kate Choi
+ * @date: 14 November 2024
+ **********************************************************************/
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +26,7 @@ public class Proj3 {
         }
     }
     // Sorting Method declarations
+
     // Merge Sort
     public static <T extends Comparable<T>> void mergeSort(ArrayList<T> a, int left, int right) {
         if (left < right) {
@@ -25,6 +37,7 @@ public class Proj3 {
         }
     }
 
+    // merge helper method to recursively merge lists
     public static <T extends Comparable<T>> void merge(ArrayList<T> a, int left, int mid, int right) {
         int n1 = mid - left + 1; // size of left half
         int n2 = right - mid; // size of right half
@@ -73,6 +86,7 @@ public class Proj3 {
         }
     }
 
+    // quick sort helper method to partition lists
     public static <T extends Comparable<T>> int partition (ArrayList<T> a, int left, int right) {
         T pivot = a.get(right);
         int i = left - 1;
@@ -87,6 +101,7 @@ public class Proj3 {
         return i + 1;
     }
 
+    // method to swap list elements
     static <T> void swap(ArrayList<T> a, int i, int j) {
         T temp = a.get(i);
         a.set(i, a.get(j));
@@ -108,6 +123,7 @@ public class Proj3 {
         }
     }
 
+    // heap sort helper method to generate minimum binary heap
     public static <T extends Comparable<T>> void heapify (ArrayList<T> a, int left, int right) {
         int smallest = left; // start from the left index as root
         int leftChild = 2 * left + 1;
@@ -190,6 +206,7 @@ public class Proj3 {
 
     }
 
+    // helper method to load dataset
     private static ArrayList<Chocolate> loadData(String file, int lines) throws IOException {
         ArrayList<Chocolate> data = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(file))) {
@@ -204,7 +221,7 @@ public class Proj3 {
 
                 String[] fields = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
-                // Parse the fields safely
+                // Parse the fields
                 String company = fields[0].trim();
                 String origin = fields[1].trim();
                 int ref = Integer.parseInt(fields[2].trim());
@@ -221,6 +238,7 @@ public class Proj3 {
         return data;
     }
 
+    // helper method to run different sorting algorithms for different list types (already sorted, shuffled, reversed) and print results to console
     private static void runSortAndSave(ArrayList<Chocolate> data, String sort, int lines) throws IOException {
         // prepare different dataset orders
         ArrayList<Chocolate> sorted = new ArrayList<>(data);
@@ -259,6 +277,7 @@ public class Proj3 {
         }
     }
 
+    // method to perform sort based on desired sorting algorithm and number of liens to be sorted, returns SortResult object with time and number of comparisons (if applicable)
     private static SortResult sortAndTime(ArrayList<Chocolate> data, String type, String sort, int lines) {
         long start = System.nanoTime();
         int comparisons = 0;
@@ -291,6 +310,7 @@ public class Proj3 {
         return new SortResult(time, comparisonsResult);
     }
 
+    // write results to file analysis.txt
     private static void saveAnalysis(String sort, int lines, SortResult sortedResult, SortResult shuffledResult, SortResult reversedResult) throws IOException {
         File file = new File("analysis.txt");
         boolean isNewFile = file.createNewFile(); // Check if the file is newly created
@@ -314,6 +334,7 @@ public class Proj3 {
         }
     }
 
+    // write new sorted list to file sorted.txt
     private static void saveSortedData(ArrayList<Chocolate> sorted) throws IOException {
         File file = new File("sorted.txt");
         boolean isNewFile = file.createNewFile(); // Check if the file is newly created
